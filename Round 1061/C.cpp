@@ -11,20 +11,26 @@ int main(){
         cin>>n>>k;
         vector<int>nums(n);
         for(int i=0; i<n; i++)cin>>nums[i];
-        vector<int>rr(200001,0);
-        int bm=0;
+        int mx=*max_element(nums.begin(),nums.end());
+        vector<int>freq(mx+1, 0);
+        vector<int>div3;
         for(int i=0; i<n; i++){
-            int ii=nums[i];
-            rr[ii]++;
-            if(ii%3==0)rr[ii/3]++;
-            for(int iii=1; iii<=ii/4; iii++)rr[iii]++;
-            bm=max(bm,ii);
+            if(nums[i]%3==0)div3.push_back(nums[i]/3);
+            if(nums[i]%2==0)div3.push_back(nums[i]/2);
+            div3.push_back(nums[i]);
+            freq[nums[i]/4]++;
         }
-        int maxm=1;
-        for(int i=1; i<=bm; i++){
-            if(rr[i]+k>=n)maxm=i;
+        for(int i=mx-1; i>=0; i--){
+            freq[i]=freq[i]+freq[i+1];
         }
-        cout<<maxm<<endl;
+        for(int i=0; i<div3.size(); i++)freq[div3[i]]++;
+        int ans=1;
+        for(int i=1; i<mx+1; i++){
+            if(freq[i]>=n-k)ans=i;
+        }
+//        for(int i=1; i<mx+1; i++)cout<<freq[i]<<" ";
+//        cout<<endl;
+        cout<<ans<<endl;
     }
     return 0;
 }
