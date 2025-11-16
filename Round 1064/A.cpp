@@ -1,0 +1,21 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    int tt;
+    cin>>tt;
+    while(tt--){
+        int n;
+        cin>>n;
+        string s;
+        cin>>s;
+        int count=0;
+        for(int i=0; i<n-1; i++){
+            if(s[i]!=s[n-1])count++;
+        }
+        cout<<count<<endl;
+    }
+    return 0;
+}
