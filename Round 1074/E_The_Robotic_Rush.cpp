@@ -16,7 +16,6 @@ int main(){
         for(int i=0; i<n; i++)cin>>a[i];
         for(int i=0; i<m; i++)cin>>b[i];
         string s;
-        vector<bool>fl(n+1,false);
         cin>>s;
         sort(a.begin(),a.end());
         sort(b.begin(),b.end());
@@ -39,19 +38,21 @@ int main(){
         }
         int ans=0;
         int aa=0;
+        unordered_set<int>st2;
+        unordered_set<int>st3;
         for(int i=0; i<k; i++){
             if(s[i]=='L')aa--;
             else aa++;
-            if(mp[aa].size()>0){
-                for(int i=0; i<mp[aa].size(); i++){
-                    if(fl[mp[aa][i]]==false){
-                        fl[mp[aa][i]]=true;
-                        ans++;
-                    }
+            if(st3.find(aa)==st3.end() && mp[aa].size()!=0){
+                st3.insert(aa);
+                for(int j=0; j<mp[aa].size(); j++){
+                    //cout<<mp[aa][j]<<" ";
+                    st2.insert(mp[aa][j]);
                 }
             }
-            cout<<n-ans<<" ";
+            cout<<n-st2.size()<<" ";
         }
+        //for(auto i: mp){cout<<i.first<<" "<<i.second<<endl;}
         cout<<endl;
     }
     return 0;
