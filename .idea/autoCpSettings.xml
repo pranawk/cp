@@ -4,6 +4,7 @@
     <option name="defaultFileExtension" value="cpp" />
     <option name="fileGenerationRoot">
       <map>
+        <entry key="CSES" value="$cses_Maths" />
         <entry key="Codeforces" value="$A201300-" />
       </map>
     </option>
