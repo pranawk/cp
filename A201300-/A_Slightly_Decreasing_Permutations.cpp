@@ -7,10 +7,14 @@ using namespace std;
 int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-    int tt;
-    cin>>tt;
-    while(tt--){
-        
+    int n,k;
+    cin>>n>>k;
+    for(int i=1; i<n-k; i++){
+        cout<<i<<" ";
     }
+    for(int i=n; i>=n-k; i--){
+        cout<<i<<" ";
+    }
+    cout<<endl;
     return 0;
 }
