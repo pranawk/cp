@@ -15,14 +15,17 @@ int main(){
         vector<int>a(n);
         for(int i=0; i<n; i++)cin>>a[i];
         int minreq=0;
-        vector<int>kk;
-        int lmx=a[0];
-        for(int i=1; i<n; i++){
-            if(a[i]<lmx)kk.push_back(lmx-a[i]);
-            else lmx=a[i];
-        }
+        for(int i=1; i<n; i++)minreq=max(minreq,a[i-1]-a[i]);
+        //cout<<minreq<<endl;
+        for(int i=1; i<n; i++)if(a[i]<a[i-1])a[i]+=minreq;
+//        vector<int>kk;
+//        int lmx=a[0];
+//        for(int i=1; i<n; i++){
+//            if(a[i]<lmx)kk.push_back(lmx-a[i]);
+//            else lmx=a[i];
+//        }
         bool fl=true;
-        for(int i=1 ; i<kk.size(); i++)if(kk[i]>kk[i-1])fl=false;
+        for(int i=1 ; i<n; i++)if(a[i]<a[i-1])fl=false;
         cout<<(fl==true ?"YES":"NO")<<endl;
     }
     return 0;
