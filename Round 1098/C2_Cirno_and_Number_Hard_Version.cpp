@@ -16,24 +16,29 @@ int main(){
         vector<int>d(n);
         for(int i=0; i<n; i++)cin>>d[i];
         vector<long long>can;
-        long long mn=0,mx=(n>0 && d[0]==0)?d[1]:d[0];
-
+        long long mn=0,mx=d[0];
         for(int i=0; i<a.size()-1; i++)mn=mn*10+d[n-1];
+        if(d[0]==0 && n>1)mx=d[1];
         for(int i=0; i<a.size(); i++)mx=mx*10+d[0];
         long long prev=0;
         for(int i=0; i<a.size(); i++){
             int ii=0;
             while(ii<n && d[ii]<a[i]-'0')ii++;
+            if(ii==n)ii--;
             if(d[ii]==a[i]-'0'){
                 long long tmp=prev;
-                if(ii+1<n)tmp+=d[ii+1];
+                if(ii+1<n)tmp=tmp*10+d[ii+1];
                 for(int j=0; j<a.size()-1-i; j++)tmp=tmp*10+d[0];
+                can.push_back(tmp);
+                tmp=prev;
+                if(ii-1>=0)tmp=tmp*10+d[ii-1];
+                for(int j=0; j<a.size()-1-i; j++)tmp=tmp*10+d[n-1];
                 can.push_back(tmp);
                 prev=prev*10+d[ii];
             }
             else{
                 long long tmp=prev;
-                if(ii<n)tmp+=d[ii];
+                if(ii<n)tmp=tmp*10+d[ii];
                 for(int j=0; j<a.size()-1-i; j++)tmp=tmp*10+d[0];
                 can.push_back(tmp);
                 tmp=prev;
