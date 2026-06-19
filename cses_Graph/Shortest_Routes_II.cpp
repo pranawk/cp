@@ -19,13 +19,14 @@ int main(){
         }
         vector<vector<long long>>distance(n+1,vector<long long>(n+1,LLONG_MAX));
         for(int i=1; i<=n; i++){
+            distance[i][i]=0;
             priority_queue<pair<long long , long long>, vector<pair<long long ,long long>>,greater<pair<long long ,long long>>>pq;
             for(int j=1; j<i; j++){
-                distance[i][j]=distance[j][i];
-                //pq.push({distance[i][j],j});
-                for(int k=0; k<roads[j].size(); k++){
-                    pq.push({roads[j][k].first+distance[i][j], roads[j][k].second});
-                }
+                if(distance[j][i]!=LLONG_MAX)distance[i][j]=distance[j][i];
+                pq.push({distance[i][j],j});
+//                for(int k=0; k<roads[j].size(); k++){
+//                    pq.push({roads[j][k].first+distance[i][j], roads[j][k].second});
+//                }
             }
             pq.push({0,i});
             long long  aa,bb;
@@ -33,10 +34,12 @@ int main(){
                 aa=pq.top().first;
                 bb=pq.top().second;
                 pq.pop();
-                if(distance[i][bb]<=aa)continue;
+                if(distance[i][bb]!=aa)continue;
                 distance[i][bb]=aa;
                 for(int j=0; j<roads[bb].size(); j++){
-                    pq.push({roads[bb][j].first+aa, roads[bb][j].second});
+                    if(distance[i][roads[bb][j].second]<=roads[bb][j].first+aa)continue;
+                    distance[i][roads[bb][j].second]=roads[bb][j].first+aa;
+                    pq.push({distance[i][roads[bb][j].second], roads[bb][j].second});
                 }
             }
         }
