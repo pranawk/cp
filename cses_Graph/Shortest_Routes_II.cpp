@@ -12,41 +12,31 @@ int main(){
         cin>>n>>m>>q;
         vector<vector<pair<long long,long long>>>roads(n+1);
         long long a,b,c;
+        vector<vector<long long>>distance(n+1,vector<long long>(n+1,LLONG_MAX/4));
         for(int i=0; i<m; i++){
             cin>>a>>b>>c;
-            roads[a].push_back({c,b});
-            roads[b].push_back({c,a});
+            distance[a][b]=min(distance[a][b],c);
+            distance[b][a]=distance[a][b];
         }
-        vector<vector<long long>>distance(n+1,vector<long long>(n+1,LLONG_MAX));
+        for(int i=0; i<=n; i++)distance[i][i]=0;
         for(int i=1; i<=n; i++){
-            distance[i][i]=0;
-            priority_queue<pair<long long , long long>, vector<pair<long long ,long long>>,greater<pair<long long ,long long>>>pq;
-            for(int j=1; j<i; j++){
-                if(distance[j][i]!=LLONG_MAX)distance[i][j]=distance[j][i];
-                pq.push({distance[i][j],j});
-//                for(int k=0; k<roads[j].size(); k++){
-//                    pq.push({roads[j][k].first+distance[i][j], roads[j][k].second});
-//                }
-            }
-            pq.push({0,i});
-            long long  aa,bb;
-            while(!pq.empty()){
-                aa=pq.top().first;
-                bb=pq.top().second;
-                pq.pop();
-                if(distance[i][bb]!=aa)continue;
-                distance[i][bb]=aa;
-                for(int j=0; j<roads[bb].size(); j++){
-                    if(distance[i][roads[bb][j].second]<=roads[bb][j].first+aa)continue;
-                    distance[i][roads[bb][j].second]=roads[bb][j].first+aa;
-                    pq.push({distance[i][roads[bb][j].second], roads[bb][j].second});
+            for(int j=1; j<=n; j++){
+                if(j==i)continue;
+                for(int k=1; k<=n; k++){
+                    if(k==i)continue;
+                    distance[j][k]=min(distance[j][k], distance[i][j]+distance[i][k]);
+                    distance[k][j]=distance[j][k];
                 }
             }
         }
+//        for(int i=1; i<n; i++){
+//            for(int j=1; j<n; j++)cout<<distance[i][j]<<" ";
+//            cout<<endl;
+//        }
         int aa,bb;
         for(int i=0; i<q; i++){
             cin>>aa>>bb;
-            if(distance[aa][bb]==LLONG_MAX){cout<<-1<<endl;continue;}
+            if(distance[aa][bb]==LLONG_MAX/4){cout<<-1<<endl;continue;}
             cout<<distance[aa][bb]<<endl;
         }
 
