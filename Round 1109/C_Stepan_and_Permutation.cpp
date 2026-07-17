@@ -16,14 +16,15 @@ int main(){
         for(int i=0; i<n; i++)cin>>a[i];
         bool fl=true;
         vector<bool>dp(n+1,false);
-        dp[0]=true;
-        for(int i=x; i<=n; i++)if(dp[i-x]==true)dp[i]=true;
-        for(int i=y; i<=n; i++)if(dp[i-y]==true)dp[i]=true;
+//        dp[0]=true;
+//        for(int i=x; i<=n; i++)if(dp[i-x]==true)dp[i]=true;
+//        for(int i=y; i<=n; i++)if(dp[i-y]==true)dp[i]=true;
         int dif=abs(x-y);
-        for(int i=dif; i<=dif; i++)if(dp[i-dif]==true)dp[i]=true;
+//        for(int i=dif; i<=n; i++)if(dp[i-dif]==true)dp[i]=true;
+        int gc=gcd(x,y);
         for(int i=0; i<n; i++){
             dif=abs(a[i]-i-1);
-            if(dp[dif]==false){fl=false;continue;}
+            if((dif%gc)!=0){fl=false;continue;}
         }
         cout<<(fl==true ? "YES" : "NO")<<endl;
     }
