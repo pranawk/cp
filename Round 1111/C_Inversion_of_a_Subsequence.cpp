@@ -28,7 +28,7 @@ int main(){
             if(c1%2==0)cout<<2<<endl;
             else cout<<1<<endl;
         }
-        else if(cz%2==1 && c11>0 && c00>0)cout<<2<<endl;
+        else if(cz>0 && c11>0 && c00>0)cout<<2<<endl;
         else if(cz==0)cout<<0<<endl;
         else cout<<-1<<endl;
     }
