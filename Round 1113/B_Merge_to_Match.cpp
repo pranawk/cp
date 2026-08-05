@@ -17,32 +17,35 @@ int main(){
         for(int i=0; i<m; i++)cin>>b[i];
         sort(a.begin(),a.end());
         sort(b.begin(),b.end());
-        vector<bool>used(n,false);
-        int l=0,r=0,ii=0;
+        vector<bool>used(m,false);
+        int l=0,r=0;
+        vector<int>bl(m,0),br(m,0);
+        int cn=0;
         bool fl=true;
-        while(r<n){
-            if(a[r]==b[ii]){
-                used[r]=true;
-                r++;ii++;
-            }
-            else{
-                while(l<n && used[l]==true)l++;
-                if(a[l]<=b[ii]){
-                    used[l]=true;
-                    l++;
-                    ii++;
-                }
-                else {fl=false; break;}
-            }
-            if(ii==m)break;
+        int uu=0;
+        while(l<n && r<m){
+            if(a[l]<b[r]){l++;cn++;}
+            else if(a[l]==b[r]){used[r]=true;cn++; l++;r++;uu++;}
+            else {bl[r]=cn;r++;}
         }
-        int yc=0;
-        for(int i=n-1; i>=0; i--){
-            if(used[i]==false)yc++;
-            else yc--;
-            if(yc<0)fl=false;
+        if(l==n)bl[r]=cn;
+        cn=0;
+        l=n-1;r=m-1;
+        while(l>=0 && r>=0){
+            if(a[l]>b[r]){l--;cn++;}
+            else if(a[l]==b[r]){r--;l--;cn++;}
+            else{br[r]=cn;r--;}
         }
-        if(fl==false || ii!=m)cout<<"NO"<<endl;
+        //for(int i=0; i<m; i++)cout<<bl[i]<<" "<<bl[r]<<endl;
+        if(l<0)br[r]=cn;
+        for(int i=0; i<m; i++){
+            if(n-uu<2*(m-uu)){fl=false;break;}
+            if(b[i]>a[n-1]){fl=false;break;}
+            if(used[i]==true){continue;}
+            if(bl[i]<=i){fl=false;break;}
+            if(br[i]<m-i){fl=false;break;}
+        }
+        if(fl==false )cout<<"NO"<<endl;
         else cout<<"YES"<<endl;
     }
     return 0;
