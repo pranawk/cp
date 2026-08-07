@@ -53,11 +53,10 @@ int main(){
             rr--;
             r--;
         }
-        while( mi>0){
+        if( mi>0){
             priority_queue<int>pq;
-            int mia=mi,mib=mi;
-            for(int i=l; i>=0 && mia-- ; i--){if(st.find(a[i])==st.end())pq.push(a[i]); st.insert(a[i]);}
-            for(int i=r; i>=0 && mib-- ; i--){if(st.find(b[i])==st.end())pq.push(b[i]); st.insert(b[i]);}
+            for(int i=l; i>=0  ; i--){if(st.find(a[i])==st.end())pq.push(a[i]); st.insert(a[i]);}
+            for(int i=r; i>=0  ; i--){if(st.find(b[i])==st.end())pq.push(b[i]); st.insert(b[i]);}
             while(mi-- && !pq.empty()){
                 ms+=pq.top();
                 pq.pop();
@@ -102,11 +101,10 @@ int main(){
             rr--;
             r--;
         }
-        while(mi>0){
+        if(mi>0){
             priority_queue<int>pq;
-            int mia=mi,mib=mi;
-            for(int i=l; i>=0 && mia-- ; i--){if(st1.find(a[i])==st1.end())pq.push(a[i]); st1.insert(a[i]);}
-            for(int i=r; i>=0 && mib-- ; i--){if(st1.find(b[i])==st1.end())pq.push(b[i]); st1.insert(b[i]);}
+            for(int i=l; i>=0  ; i--){if(st1.find(a[i])==st1.end())pq.push(a[i]); st1.insert(a[i]);}
+            for(int i=r; i>=0  ; i--){if(st1.find(b[i])==st1.end())pq.push(b[i]); st1.insert(b[i]);}
             while(mi-- && !pq.empty()){
                 ms+=pq.top();
                 pq.pop();
