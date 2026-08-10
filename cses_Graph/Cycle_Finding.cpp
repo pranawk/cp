@@ -1,27 +1,15 @@
 //  Cycle Finding
-
+/*
+Good Question: You use Bellmann ford algo, for n-1 time relaxation ,
+If relaxation happen for nth time , there is a negative edge,
+To find loop , we have already declarec the parent array, we need to set back....
+... n times  , to make sure to get into the loop, into the loop, we just print the result.
+*/
 #include<bits/stdc++.h>
 
 using namespace std;
 int n,m,ti;
 bool fl=false;
-void solve(vector<vector<pair<int,int>>>&adj, int ii, int cost, vector<long long>&cos, vector<int>&parent){
-    if(fl==true)return;
-    if(cos[ii]!=LLONG_MAX/3 ){
-        if(cost<cos[ii]){
-            ti=ii;
-            fl=true;
-        }
-        return;
-    }
-    cos[ii]=cost;
-    for(int i=0; i<adj[ii].size(); i++){
-        if(fl==true)break;
-        parent[adj[ii][i].first]=ii;
-        solve(adj, adj[ii][i].first, cost+adj[ii][i].second, cos, parent);
-    }
-    return ;
-}
 int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
@@ -32,51 +20,38 @@ int main(){
         cin>>a>>b>>c;
         adj[a].push_back({b,c});
     }
-    vector<int>parent(n+1);
-//    vector<long long>cos(n+1,LLONG_MAX/3);
-    queue<pair<int,long long>>q;
-    for(int i=1; i<=n; i++){
-        vector<long long>cos(n+1,LLONG_MAX/3);
-        //parent[i]=-1;
-        solve(adj, i, 0, cos, parent);
-        if(fl==true)break;
-    }
-//    cos[1]=0;
-//    q.push({1,0});
-//    int ti;
-//    while(!q.empty()){
-//        int ii=q.front().first;
-//        long long cc=q.front().second;
-//        q.pop();
-//        for(int i=0; i<adj[ii].size(); i++){
-//            if(cos[adj[ii][i].first]<cc+adj[ii][i].second){
-//                parent[adj[ii][i].first]=ii;
-//                ti=adj[ii][i].first;
-//                fl=true;
-//                break;
-//            }
-//            if(cos[adj[ii][i].first]>cc+adj[ii][i].second){
-//                parent[adj[ii][i].first]=ii;
-//                cos[adj[ii][i].first]=cc+adj[ii][i].second;
-//                q.push({adj[ii][i].first,cc+adj[ii][i].second});
-//            }
-//        }
-//        if(fl==true)break;
-//    }
-    if(fl==true){
-        cout<<"YES"<<endl;
-        int fu=ti;
-        vector<int>ans;
-        while(1){
-            ans.push_back(ti);
-            ti=parent[ti];
-            if(ti==fu)break;
+    vector<int>parent(n+1,-1);
+    vector<long long>cost(n+1,0);
+    bool fl=false;
+    int ii;
+    for(int k=0; k<n; k++){
+        for(int i=1; i<=n; i++){
+            for(int j=0; j<adj[i].size(); j++){
+                if(cost[adj[i][j].first]>cost[i]+adj[i][j].second){
+                    if(k==n-1){
+                        fl=true;
+                        ii=adj[i][j].first;
+                    }
+                    cost[adj[i][j].first]=cost[i]+adj[i][j].second;
+                    parent[adj[i][j].first]=i;
+                }
+            }
         }
-        cout<<fu<<" ";
-        for(int i=ans.size()-1; i>=0; i--)cout<<ans[i]<<" ";
-        //cout<<ti<<" "<<fu;
-    }else{
-        cout<<"NO"<<endl;
     }
+    if(fl==false){cout<<"NO";return 0;}
+    for (int i = 0; i < n; i++) {
+        ii= parent[ii];
+    }
+    vector<int>pr;
+    pr.push_back(ii);
+    int jj=ii;
+    while(parent[jj]!=ii){
+        pr.push_back(parent[jj]);
+        jj=parent[jj];
+        //if(jj==-1){fl=false;break;}
+    }
+    pr.push_back(ii);
+    cout<<"YES"<<endl;
+    for(int i=pr.size()-1; i>=0; i--)cout<<pr[i]<<" ";
     return 0;
 }
