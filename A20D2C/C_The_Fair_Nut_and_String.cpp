@@ -1,5 +1,5 @@
 //  C. The Fair Nut and String
-
+//.
 #include<bits/stdc++.h>
 
 using namespace std;
