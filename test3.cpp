@@ -1,18 +1,23 @@
 #include<bits/stdc++.h>
-#include<iostream>
+
 using namespace std;
-int main(){
-    int a=0;
-    cin>>a;
-    for(int i=0; i<a+1; ++i){
-        string b;
-        getline(cin,b);
-        string ans;
-        for(int j=0; j<b.length();++j){
-            ans+=b[j];
-            while(b[j]>=33)j++;
-        }
-        cout<<ans<<"\n";
+
+int main()
+{
+    int n;
+    cin>>n;
+    string s;
+    cin>>s;
+    int cz=0,co=0;
+    for(int i=0; i<n; i++){
+        if(s[i]=='0')cz++;
+        else co++;
     }
+    if(co!=cz){
+        cout<<1<<endl<<s;return 0;
+    }
+    cout<<min(n, 2)<<endl;
+    cout<<s[0]<<" ";
+    for(int i=1; i<n; i++)cout<<s[i];
     return 0;
 }
