@@ -11,17 +11,22 @@ int main(){
     cin>>n;
     vector<int>a(n);
     for (int i=0; i<n; i++)cin>>a[i];
-    int rm=a[0];
-    int ans=0;
-    bool fl=false;
-    for (int i=1; i<n; i++)
+    vector<int>ans(n,0);
+    vector<int>life(n,INT_MAX);
+    stack<pair<int,int>>st;
+    for (int i=0; i<n; i++)
     {
-        int cn=0;
-        if (a[i]<a[i-1])fl=true;
-        while (i+1<n && a[i+1]<rm && a[i+1]>a[i]){cn++;i++;}
-        ans=max(ans,cn);
-        if (a[i]>rm)rm=a[i];
+        while (!st.empty() && (st.top().first<a[i]|| life[st.top().second]<=ans[st.top().second]))st.pop();
+        if (!st.empty())
+        {
+            ans[st.top().second]++;
+            life[i]=ans[st.top().second];
+        }
+        st.push({a[i],i});
     }
-    cout<<ans+fl;
+    // for (int i=0; i<n; i++)cout<<life[i]<<" ";
+    // cout<<endl;
+    // for (int i=0; i<n; i++)cout<<ans[i]<<" ";
+    cout<<*max_element(ans.begin(),ans.end());
     return 0;
 }
