@@ -4,25 +4,27 @@
 
 using namespace std;
 int n;
-long long dp[200001][2];
-//true =1. false =0
-int solve(vector<int>&a, int ii, int ch, bool fl)
+int dp[200001][2];
+//true =right. false =left
+int solve(vector<int>&a, int ii, bool fl)
 {
-    if (ii>=n || ii<0)return 1;
-    if (a[ii]>=ch)return 1;
-    if (dp[ii+1][1]==-1)dp[ii+1][1]=1+solve(a,ii+1,a[ii], true);
-    if (dp[ii-1][0]==-1)dp[ii-1][0]=1+solve(a,ii-1,a[ii], false);
-
-    int aa=dp[ii+1][1];
-    int bb=dp[ii-1][0];
-    // return max(aa,bb);
-    int cc;
-        if (dp[ii+1][1]==-1)dp[ii+1][1]=solve(a,ii+1,a[ii], true);
-        if (dp[ii-1][0]==-1)dp[ii-1][0]=solve(a,ii-1,a[ii], false);
-        if (fl==true)cc=solve(a, ii+1, ch, fl);
-        else cc=solve(a, ii-1, ch, fl);
-    // if (dp[ii][fl]==-1)dp[ii][fl]=max(aa, max(bb, cc));
-    return max(aa, max(bb, cc));
+    int aa=0;
+    for (int i=ii+1; i<n; i++)
+    {
+        if (a[i]>=a[ii])break;
+        if (dp[i][0]==-1)dp[i][0]=solve(a, i,  true);
+        if (dp[i][1]==-1)dp[i][1]=solve(a, i, false);
+        aa=max(aa, max(1+dp[i][0],1+dp[i][1]));
+    }
+    for (int i=ii-1; i>=0; i--)
+    {
+        if (a[i]>=a[ii])break;
+        if (dp[i][0]==-1)dp[i][0]=solve(a, i,  true);
+        if (dp[i][1]==-1)dp[i][1]=solve(a, i, false);
+        aa=max(aa, max(1+dp[i][0],1+dp[i][1]));
+    }
+    dp[ii][fl]=aa;
+    return dp[ii][fl];
 }
 int main(){
     ios_base::sync_with_stdio(false);
@@ -35,9 +37,7 @@ int main(){
         for (int j=0; j<2; j++)dp[i][j]=-1;
     }
     int ans=0;
-    // ans=solve(a,0, INT_MAX, true);
-    // ans=max(ans,solve(a,n-2,INT_MAX,false));
-    for (int i=0; i<n; i++)ans=max(ans, max(solve(a, i+1, a[i], true),solve(a,i-1,a[i],false)));
-    cout<<ans;
+    for (int i=0; i<n; i++)ans=max(ans,solve(a, i, true));
+    cout<<ans+1;
     return 0;
 }
