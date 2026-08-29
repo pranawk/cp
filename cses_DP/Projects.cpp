@@ -34,7 +34,7 @@ int main(){
         start[i].second=i;
     }
     sort(start.begin(),start.end());
-    vector<int>ends(n);
+    vector<int>ends(n); // find the index at which the i_th project end, for non n^2 solution, ok?
     priority_queue<pair<int,int>>pq;
     for (int i=0; i<n; i++)
     {
