@@ -19,8 +19,9 @@ int main(){
     }
     vector<int>ans(d);
     for(int i=0; i<d; i++){
-        if(s<mm[i].first)break;
+//         if(s<mm[i].first)break;
         int aa=min(s-mr[i], mm[i].second);
+        if(aa<mm[i].first)break;
         s-=aa;
         ans[i]=aa;
     }

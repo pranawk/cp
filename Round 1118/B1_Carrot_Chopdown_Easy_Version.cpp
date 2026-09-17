@@ -26,7 +26,7 @@ int main(){
             if (a[i]%2==0)ans=max(ans,n-l+mp[a[i]]);
 
         }
-        
+
         cout<<ans<<endl;
     }
     return 0;
