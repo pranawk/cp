@@ -1,5 +1,6 @@
 //  C. Vanya and Scales
-
+// Good Question, think it like base 10 , what numbers can you get, by adding or
+// subtracting 10^x one times, ... a bit thinking.
 #include<bits/stdc++.h>
 
 using namespace std;
