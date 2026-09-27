@@ -4,30 +4,30 @@
 
 using namespace std;
 
-unordered_map<string,int>mp;
-void giv(int a){
-        string s=to_string(a);
-        s+="_";
-        mp[s]++;
-        unordered_set<int>st;
-        st.insert(a);
-        for(int i=0; i<10000; i++){
-            int aa=0;
-            while(a>0){
-                aa+=pow((a%10), 2);
-                a/=10;
-            }
-            a=aa;
-            if(st.find(a)!=st.end())break;
-            st.insert(a);
-            string s2=to_string(a);
-            s2+="_";
-            s2+=to_string(i);
-//             cout<<s2<<" "<<i<<endl;
-            mp[s2]++;
+unordered_map<int,int>mp;
+void doit(){
+    for(int i=1; i<9*81+1; i++){
+        int ii=i;
+        int cn=0;
+        while(ii!=1 && ii!=4){
+            int temp=0;
+            while(ii>0){temp+=(pow((ii%10),2));ii/=10;}
+            ii=temp;
+            cn++;
         }
-        return ;
+        while(cn<20)cn+=8;
+        if(ii==1)mp[i]=-1;
+        else mp[i]=cn;
     }
+}
+int giv(int a){
+    int ii=0;
+    while(a>0){
+        ii+=pow((a%10),2);
+        a/=10;
+    }
+    return ii;
+}
 int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
@@ -38,9 +38,20 @@ int main(){
         cin>>n;
         vector<int>a(n);
         for(int i=0; i<n; i++)cin>>a[i];
-        for(int i=0; i<n; i++)giv(a[i]);
+        doit();
+        int cn1=0;
+        unordered_map<int,int>mp2;
+        for(int i=0; i<n; i++){
+            int cc=mp[giv(a[i])];
+            if(cc==-1)cn1++;
+            else mp2[cc]++;
+        }
         int ans=0;
-        for(auto i:mp){ans=max(ans,i.second);}
+        ans+=((cn1)*(cn1-1))/2;
+        for(auto i:mp2){
+            int d=i.second;
+            ans+=((d)*(d-1))/2;
+        }
         cout<<ans<<endl;
     }
     return 0;
