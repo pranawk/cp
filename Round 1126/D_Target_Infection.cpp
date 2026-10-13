@@ -32,18 +32,20 @@ int main(){
         r=0;
         long long sm=0;
         for(int i=0; i<n; i++){
+            r=i;sm=0;
             long long aa=a[i].first;
             long long bb=a[i].second;
             while(r<n){
-                if(a[r].second<aa+m){sm+=a[r].second-a[r].first+1;break;}
+                if(a[r].second<aa+m){sm+=a[r].second-a[r].first+1;}
                 else if(a[r].first<aa+m){sm+=aa+m-a[r].first; break;}
                 else if(a[r].first>aa+m)break;
+                r++;
             }
-            r++;
+//             r++;
             long long as=sm;
             sm-=(bb-aa+1);
             while(r<n){
-                if(a[r].second<bb+m){sm+=a[r].second-a[r].first+1;break;}
+                if(a[r].second<bb+m){sm+=a[r].second-a[r].first+1;}
                 else if(a[r].first<bb+m){sm+=bb+m-a[r].first; break;}
                 else if(a[r].first>bb+m)break;
                 r++;
