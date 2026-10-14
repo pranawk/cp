@@ -12,7 +12,7 @@ int main(){
     long long aa=0,bb=0;
     n--; m--;
     while(n>0){
-        
+
     }
     return 0;
 }
