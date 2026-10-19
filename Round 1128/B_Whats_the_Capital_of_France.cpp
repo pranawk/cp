@@ -16,18 +16,16 @@ int main(){
         int temp;
         for(int i=0; i<n; i++){cin>>temp; mn=min(mn, temp); mx=max(mx, temp);}
         int ans=mx;
-        int ii=0, pp=0, aa=0;
-        while((1<<ii)<=mx){
-            aa|=(1<<ii);
-            pp=1<<ii;
-            ii++;
+        int aa=0;
+        for(int i=31; i>=0; i--){
+            if((mx&(1<<i))==(1<<i) && (mn&(1<<i))==0){
+                for(int j=i; j>=0; j--){
+                    aa|=(1<<j);
+                }
+                break;
+            }
         }
-        if((pp&mn)!=pp){
-            cout<<aa<<endl;
-            continue;
-        }
-        for(int i=mn; i<mx; i++)ans|=i;
-        cout<<ans<<endl;
+        cout<<(mx|aa)<<endl;
     }
     return 0;
 }
