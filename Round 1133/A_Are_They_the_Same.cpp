@@ -12,18 +12,19 @@ int main(){
     while(tt--){
         int n,k;
         cin>>n>>k;
-        vector<int>a(n),b(n);
-        for(int i=0; i<n; i++)cin>>a[i];
-        for(int i=0; i<n; i++)cin>>b[i];
-        bool fl=true;
-        int cn=0;
+        int ec1=0,ec2=0,oc1=0,oc2=0, temp;
         for(int i=0; i<n; i++){
-            if(b[i]>=a[i] && (b[i]-a[i])%2==0)continue;
-            if(a[i]+k <=b[i] && k%2==1)continue;
-            fl=false;
-            cn++;
+            cin>>temp;
+            if(temp%2==0)ec1++;
+            else oc1++;
         }
-        cout<<(fl==true || cn%2==0 ? "YES" : "NO")<<'\n';
+        for(int i=0; i<n; i++){
+            cin>>temp;
+            if(temp%2==0)ec2++;
+            else oc2++;
+        }
+        if((oc1>=oc2 && k%2==0) || (ec1>=ec2 && k%2==1))cout<<"YES\n";
+        else cout<<"NO\n";
     }
     return 0;
 }
