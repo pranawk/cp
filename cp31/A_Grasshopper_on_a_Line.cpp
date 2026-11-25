@@ -10,7 +10,10 @@ int main(){
     int tt;
     cin>>tt;
     while(tt--){
-        
+        int n,k;
+        cin>>n>>k;
+        if(n%k==0)cout<<2<<'\n'<<-1<<" "<<n+1<<'\n';
+        else cout<<1<<'\n'<<n<<'\n';
     }
     return 0;
 }
